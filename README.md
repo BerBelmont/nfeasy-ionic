@@ -43,13 +43,31 @@ Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **
 - Controle de estoque automático
 - Upload de imagens de produtos
 - Categorização por subgrupos
-- Edição e ativação/desativação de produtos
+- Formulário simplificado sem listagem (foco no cadastro)
 
 ### 💰 Movimentação Financeira
 - Visualização de vendas por período (hoje, semana, mês)
 - Filtros por forma de pagamento
 - Busca em tempo real
-- Relatórios financeiros
+- **Relatórios financeiros em PDF** com totalizadores
+- **Confirmação de vendas** com geração automática de NF
+- **Sistema de devoluções** parciais ou totais
+- Rastreamento completo de vendas e devoluções
+
+### 📄 Relatórios em PDF
+- Geração automática de relatórios financeiros
+- Filtros por período e forma de pagamento
+- Tabelas detalhadas com vendas e devoluções
+- Totalizadores por forma de pagamento
+- Download automático do arquivo
+
+### 🔄 Gestão de Devoluções
+- Modal intuitivo para seleção de itens
+- Devolução parcial ou total de produtos
+- Validação de quantidades
+- Registro de motivo da devolução
+- Vínculo com venda original
+- Valores negativos para controle contábil
 
 ### 🛒 PDV (Ponto de Venda)
 - Interface intuitiva de venda
@@ -68,11 +86,13 @@ Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **
 - **React 18** - Biblioteca de interface
 - **TypeScript** - Tipagem estática
 - **Chart.js** - Gráficos interativos
+- **pdf-lib** - Geração de PDFs
 - **CSS Modules** - Estilos encapsulados
 
 ### Backend
 - **Next.js API Routes** - Endpoints serverless
 - **Zod** - Validação de schemas
+- **Sistema Mock** - Banco de dados em memória para desenvolvimento
 
 ### Desenvolvimento
 - **ESLint** - Linting de código
@@ -281,6 +301,40 @@ Cadastra ou atualiza produto (requer autenticação)
 
 #### `GET /api/Movimentacao_financeira?periodo=hoje&forma=Pix`
 Movimentações financeiras com filtros (requer autenticação)
+
+#### `POST /api/relatorios/financeiro`
+Gera relatório financeiro em PDF (requer autenticação)
+```json
+{
+  "periodo": "hoje|semana|mes",
+  "pagamentos": ["PIX", "DINHEIRO", "CREDITO"],
+  "vendasIds": ["uuid-1", "uuid-2"]
+}
+```
+**Retorna:** Arquivo PDF para download
+
+#### `POST /api/mov/confirmar`
+Confirma e finaliza uma venda aberta (requer autenticação)
+```json
+{
+  "vendaId": "uuid-da-venda",
+  "formaPagamento": "PIX",
+  "descontoValor": 0,
+  "acrescimoValor": 0
+}
+```
+
+#### `POST /api/mov/devolucao`
+Registra devolução de produtos (requer autenticação)
+```json
+{
+  "vendaOriginalId": "uuid-da-venda",
+  "itens": [
+    { "itemId": "uuid-item", "qtdDevolver": 2 }
+  ],
+  "motivo": "Produto com defeito"
+}
+```
 
 #### `GET /api/produtos_notafiscal`
 Retorna carrinho atual (requer autenticação)

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, FormEvent } from 'react';
+import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import AuthGuard from '@/components/AuthGuard';
 import { authFetch } from '@/lib/authFetch';
@@ -24,7 +24,6 @@ interface Produto {
 }
 
 export default function CadastroProdutosPage() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
   const [form, setForm] = useState<Produto>({
     codigo: '',
     nome: '',
@@ -40,16 +39,6 @@ export default function CadastroProdutosPage() {
     ativo: true,
     estoque: 0,
   });
-
-  const loadProdutos = async () => {
-    const res = await authFetch('/api/cadastro_produtos');
-    const list = await res.json();
-    setProdutos(list);
-  };
-
-  useEffect(() => {
-    loadProdutos();
-  }, []);
 
   const handleSalvar = async () => {
     if (!form.codigo || !form.nome || !form.subgrupo || !form.unidade || !form.ncm) {
@@ -74,8 +63,7 @@ export default function CadastroProdutosPage() {
       return;
     }
 
-    await loadProdutos();
-    alert('Salvo!');
+    alert('Produto salvo com sucesso!');
     handleLimpar();
   };
 
@@ -97,10 +85,6 @@ export default function CadastroProdutosPage() {
     });
   };
 
-  const handleEditar = (produto: Produto) => {
-    setForm(produto);
-  };
-
   return (
     <AuthGuard>
       <div className="app">
@@ -110,7 +94,7 @@ export default function CadastroProdutosPage() {
             <div className="center-title" style={{ letterSpacing: '.5px' }}>
               CADASTRO DE PRODUTOS
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '520px 1fr', gap: '40px' }}>
+            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
               <div style={{ display: 'grid', gap: '14px' }}>
                 <label style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '16px', alignItems: 'center' }}>
                   <span>Código</span>
@@ -273,35 +257,6 @@ export default function CadastroProdutosPage() {
                     🔎
                   </button>
                 </div>
-              </div>
-
-              <div>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Código</th>
-                      <th>Nome</th>
-                      <th>Preço</th>
-                      <th>Estoque</th>
-                      <th>Ativo</th>
-                      <th>Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {produtos.map((p) => (
-                      <tr key={p.id}>
-                        <td>{p.codigo}</td>
-                        <td>{p.nome}</td>
-                        <td>{p.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td>{p.estoque}</td>
-                        <td>{p.ativo !== false ? 'Sim' : 'Não'}</td>
-                        <td>
-                          <button onClick={() => handleEditar(p)}>Editar</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
