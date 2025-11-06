@@ -4,6 +4,31 @@ import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import AuthGuard from '@/components/AuthGuard';
 import { authFetch } from '@/lib/authFetch';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonSelect,
+  IonSelectOption,
+  IonToggle,
+  IonButton,
+  IonButtons,
+  IonIcon,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonMenuButton
+} from '@ionic/react';
+import { save, trash, search } from 'ionicons/icons';
 
 interface Produto {
   id?: string;
@@ -87,181 +112,198 @@ export default function CadastroProdutosPage() {
 
   return (
     <AuthGuard>
-      <div className="app">
-        <Sidebar />
-        <main className="main">
-          <div className="card">
-            <div className="center-title" style={{ letterSpacing: '.5px' }}>
-              CADASTRO DE PRODUTOS
-            </div>
-            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-              <div style={{ display: 'grid', gap: '14px' }}>
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '16px', alignItems: 'center' }}>
-                  <span>Código</span>
-                  <input
-                    className="input"
-                    value={form.codigo}
-                    onChange={(e) => setForm({ ...form, codigo: e.target.value })}
-                  />
-                </label>
+      <IonPage id="main-content">
+        <IonHeader>
+          <IonToolbar color="primary">
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+            <IonTitle>Cadastro de Produtos</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <Sidebar />
+          
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle style={{ textAlign: 'center', fontSize: '28px', letterSpacing: '.5px' }}>
+                CADASTRO DE PRODUTOS
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <IonGrid>
+                <IonRow>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Código *</IonLabel>
+                      <IonInput
+                        value={form.codigo}
+                        onIonInput={(e) => setForm({ ...form, codigo: e.detail.value || '' })}
+                        placeholder="Código do produto"
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '16px', alignItems: 'center' }}>
-                  <span>Produto</span>
-                  <input
-                    className="input"
-                    value={form.nome}
-                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Produto *</IonLabel>
+                      <IonInput
+                        value={form.nome}
+                        onIonInput={(e) => setForm({ ...form, nome: e.detail.value || '' })}
+                        placeholder="Nome do produto"
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '16px', alignItems: 'center' }}>
-                  <span>Subgrupo</span>
-                  <select
-                    className="input"
-                    value={form.subgrupo}
-                    onChange={(e) => setForm({ ...form, subgrupo: e.target.value })}
-                  >
-                    <option>Mercearia</option>
-                    <option>Frios</option>
-                    <option>Higiene</option>
-                    <option>Limpeza</option>
-                    <option>Bebidas</option>
-                  </select>
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Subgrupo *</IonLabel>
+                      <IonSelect
+                        value={form.subgrupo}
+                        onIonChange={(e) => setForm({ ...form, subgrupo: e.detail.value })}
+                      >
+                        <IonSelectOption value="Mercearia">Mercearia</IonSelectOption>
+                        <IonSelectOption value="Frios">Frios</IonSelectOption>
+                        <IonSelectOption value="Higiene">Higiene</IonSelectOption>
+                        <IonSelectOption value="Limpeza">Limpeza</IonSelectOption>
+                        <IonSelectOption value="Bebidas">Bebidas</IonSelectOption>
+                      </IonSelect>
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 220px', gap: '16px', alignItems: 'center' }}>
-                  <span>Preço</span>
-                  <input
-                    className="input"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={form.preco}
-                    onChange={(e) => setForm({ ...form, preco: Number(e.target.value) })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Preço (R$)</IonLabel>
+                      <IonInput
+                        type="number"
+                        value={form.preco}
+                        onIonInput={(e) => setForm({ ...form, preco: Number(e.detail.value) || 0 })}
+                        placeholder="0.00"
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '16px', alignItems: 'center' }}>
-                  <span>Cód. Barras</span>
-                  <input
-                    className="input"
-                    value={form.codigoBarras}
-                    onChange={(e) => setForm({ ...form, codigoBarras: e.target.value })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Código de Barras</IonLabel>
+                      <IonInput
+                        value={form.codigoBarras}
+                        onIonInput={(e) => setForm({ ...form, codigoBarras: e.detail.value || '' })}
+                        placeholder="EAN-13"
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 160px', gap: '16px', alignItems: 'center' }}>
-                  <span>Un. Medida</span>
-                  <select
-                    className="input"
-                    value={form.unidade}
-                    onChange={(e) => setForm({ ...form, unidade: e.target.value })}
-                  >
-                    <option>UN</option>
-                    <option>KG</option>
-                    <option>L</option>
-                  </select>
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Unidade de Medida *</IonLabel>
+                      <IonSelect
+                        value={form.unidade}
+                        onIonChange={(e) => setForm({ ...form, unidade: e.detail.value })}
+                      >
+                        <IonSelectOption value="UN">UN</IonSelectOption>
+                        <IonSelectOption value="KG">KG</IonSelectOption>
+                        <IonSelectOption value="L">L</IonSelectOption>
+                      </IonSelect>
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 340px', gap: '16px', alignItems: 'center' }}>
-                  <span>NCM</span>
-                  <input
-                    className="input"
-                    placeholder="8 dígitos"
-                    value={form.ncm}
-                    onChange={(e) => setForm({ ...form, ncm: e.target.value })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">NCM (8 dígitos) *</IonLabel>
+                      <IonInput
+                        value={form.ncm}
+                        onIonInput={(e) => setForm({ ...form, ncm: e.detail.value || '' })}
+                        placeholder="00000000"
+                        maxlength={8}
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 160px', gap: '16px', alignItems: 'center' }}>
-                  <span>Peso</span>
-                  <input
-                    className="input"
-                    type="number"
-                    min="0"
-                    step="0.001"
-                    value={form.peso}
-                    onChange={(e) => setForm({ ...form, peso: Number(e.target.value) })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Peso (kg)</IonLabel>
+                      <IonInput
+                        type="number"
+                        value={form.peso}
+                        onIonInput={(e) => setForm({ ...form, peso: Number(e.detail.value) || 0 })}
+                        placeholder="0.000"
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 160px', gap: '16px', alignItems: 'center' }}>
-                  <span>CST Ipi</span>
-                  <input
-                    className="input"
-                    value={form.cstIpi}
-                    onChange={(e) => setForm({ ...form, cstIpi: e.target.value })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="4">
+                    <IonItem>
+                      <IonLabel position="stacked">CST IPI</IonLabel>
+                      <IonInput
+                        value={form.cstIpi}
+                        onIonInput={(e) => setForm({ ...form, cstIpi: e.detail.value || '' })}
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 160px', gap: '16px', alignItems: 'center' }}>
-                  <span>CST Cofins</span>
-                  <input
-                    className="input"
-                    value={form.cstCofins}
-                    onChange={(e) => setForm({ ...form, cstCofins: e.target.value })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="4">
+                    <IonItem>
+                      <IonLabel position="stacked">CST COFINS</IonLabel>
+                      <IonInput
+                        value={form.cstCofins}
+                        onIonInput={(e) => setForm({ ...form, cstCofins: e.detail.value || '' })}
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 160px', gap: '16px', alignItems: 'center' }}>
-                  <span>CST Pis</span>
-                  <input
-                    className="input"
-                    value={form.cstPis}
-                    onChange={(e) => setForm({ ...form, cstPis: e.target.value })}
-                  />
-                </label>
+                  <IonCol size="12" sizeMd="4">
+                    <IonItem>
+                      <IonLabel position="stacked">CST PIS</IonLabel>
+                      <IonInput
+                        value={form.cstPis}
+                        onIonInput={(e) => setForm({ ...form, cstPis: e.detail.value || '' })}
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '16px', alignItems: 'center' }}>
-                  <span>Imagem</span>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <div style={{ width: '320px', height: '200px', background: '#ddd', border: '1px solid #bbb', borderRadius: '8px' }}></div>
-                    <button className="btn" style={{ background: '#cfd3d6', color: '#333' }} type="button">
-                      Selecionar
-                    </button>
-                  </div>
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel position="stacked">Estoque</IonLabel>
+                      <IonInput
+                        type="number"
+                        value={form.estoque}
+                        onIonInput={(e) => setForm({ ...form, estoque: Number(e.detail.value) || 0 })}
+                        placeholder="0"
+                      />
+                    </IonItem>
+                  </IonCol>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 180px', gap: '16px', alignItems: 'center' }}>
-                  <span>Ativo</span>
-                  <select
-                    className="input"
-                    value={String(form.ativo)}
-                    onChange={(e) => setForm({ ...form, ativo: e.target.value === 'true' })}
-                  >
-                    <option value="true">Ativo</option>
-                    <option value="false">Inativo</option>
-                  </select>
-                </label>
+                  <IonCol size="12" sizeMd="6">
+                    <IonItem>
+                      <IonLabel>Produto Ativo</IonLabel>
+                      <IonToggle
+                        checked={form.ativo}
+                        onIonChange={(e) => setForm({ ...form, ativo: e.detail.checked })}
+                      />
+                    </IonItem>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
 
-                <label style={{ display: 'grid', gridTemplateColumns: '120px 140px', gap: '16px', alignItems: 'center' }}>
-                  <span>Estoque</span>
-                  <input
-                    className="input"
-                    type="number"
-                    min="0"
-                    step="1"
-                    value={form.estoque}
-                    onChange={(e) => setForm({ ...form, estoque: Number(e.target.value) })}
-                  />
-                </label>
-
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <button className="btn red" title="Excluir" type="button">
-                    🗑
-                  </button>
-                  <button className="btn green" onClick={handleSalvar} title="Salvar" type="button">
-                    ✅
-                  </button>
-                  <button className="btn navy" onClick={handleLimpar} title="Limpar" type="button">
-                    🔎
-                  </button>
-                </div>
+              <div style={{ display: 'flex', gap: '12px', marginTop: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <IonButton color="danger" onClick={() => alert('Função de exclusão não implementada')}>
+                  <IonIcon slot="start" icon={trash} />
+                  Excluir
+                </IonButton>
+                <IonButton color="success" onClick={handleSalvar}>
+                  <IonIcon slot="start" icon={save} />
+                  Salvar
+                </IonButton>
+                <IonButton color="secondary" onClick={handleLimpar}>
+                  <IonIcon slot="start" icon={search} />
+                  Limpar
+                </IonButton>
               </div>
-            </div>
-          </div>
-        </main>
-      </div>
+            </IonCardContent>
+          </IonCard>
+        </IonContent>
+      </IonPage>
     </AuthGuard>
   );
 }

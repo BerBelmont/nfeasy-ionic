@@ -1,10 +1,23 @@
-# 🧾 NFEasy - Sistema de Gestão e PDV
+# 🧾 NFEasy - Sistema de Gestão e PDV com Ionic Framework
 
-Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **Next.js 14**, **TypeScript** e **React**. Ideal para pequenos e médios comércios que precisam de controle de estoque, vendas e emissão de notas fiscais.
+Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **Next.js 14**, **Ionic React**, **TypeScript** e **React**. Refatorado com **Ionic Framework** para uma interface moderna, responsiva e mobile-friendly.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14.2.5-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-18.3.1-blue?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4.5-blue?style=flat-square&logo=typescript)
+![Ionic](https://img.shields.io/badge/Ionic-8.x-blue?style=flat-square&logo=ionic)
+
+---
+
+## 🎯 Sobre a Refatoração
+
+Este projeto foi **completamente refatorado** para utilizar o **Ionic Framework**, proporcionando:
+
+✅ **Interface Moderna** - Componentes nativos do Ionic  
+✅ **Totalmente Responsivo** - Desktop, tablet e mobile  
+✅ **Menu Lateral** - IonMenu com navegação intuitiva  
+✅ **3 Telas Completas** - Todas integradas com backend mockado  
+✅ **Backend Mockado** - Sem necessidade de banco de dados  
 
 ---
 
@@ -14,12 +27,10 @@ Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **
 - [Tecnologias](#-tecnologias)
 - [Instalação](#-instalação)
 - [Como Usar](#-como-usar)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Páginas e Rotas](#-páginas-e-rotas)
-- [Autenticação](#-autenticação)
+- [Telas Implementadas](#-telas-implementadas)
+- [Documentação](#-documentação)
 - [API Routes](#-api-routes)
 - [Desenvolvimento](#-desenvolvimento)
-- [Build e Deploy](#-build-e-deploy)
 
 ---
 
@@ -30,24 +41,23 @@ Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **
 - Proteção de rotas baseada em roles
 - Sessão persistente com localStorage
 - Logout automático em caso de token inválido
+- **Componentes:** IonPage, IonCard, IonInput, IonButton
 
 ### 📊 Dashboard Administrativo
-- Gráficos interativos de vendas por hora
+- Gráficos interativos de vendas por hora (Chart.js)
 - Cards de resumo diário (faturamento, vendas, ticket médio)
 - Monitoramento de produtos com baixo estoque
-- Visualização em tempo real usando Chart.js
+- Interface com **IonCard**, **IonGrid**, **IonList**
+- Menu lateral acessível (**IonMenu**)
 
 ### 📦 Gestão de Produtos
 - Cadastro completo de produtos com validação
 - Código de barras, NCM, CST (IPI, Cofins, PIS)
-- Controle de estoque automático
-- Upload de imagens de produtos
-- Categorização por subgrupos
-- Formulário simplificado sem listagem (foco no cadastro)
+- Controle de estoque
+- Formulário com **IonInput**, **IonSelect**, **IonToggle**
+- Validações em tempo real
+- Interface intuitiva e responsiva
 
-### 💰 Movimentação Financeira
-- Visualização de vendas por período (hoje, semana, mês)
-- Filtros por forma de pagamento
 - Busca em tempo real
 - **Relatórios financeiros em PDF** com totalizadores
 - **Confirmação de vendas** com geração automática de NF
@@ -85,17 +95,19 @@ Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **
 - **Next.js 14** - Framework React com App Router
 - **React 18** - Biblioteca de interface
 - **TypeScript** - Tipagem estática
+- **Ionic React** - Framework de componentes UI
+- **Ionicons** - Biblioteca de ícones
 - **Chart.js** - Gráficos interativos
-- **pdf-lib** - Geração de PDFs
-- **CSS Modules** - Estilos encapsulados
+- **React Chart.js 2** - Integração Chart.js com React
 
 ### Backend
 - **Next.js API Routes** - Endpoints serverless
-- **Zod** - Validação de schemas
-- **Sistema Mock** - Banco de dados em memória para desenvolvimento
+- **Sistema Mock** - Banco de dados em memória (sem BD real)
+- **Autenticação JWT** - Tokens mockados para autenticação
 
 ### Desenvolvimento
 - **ESLint** - Linting de código
+- **TypeScript** - Tipagem estática completa
 - **Hot Reload** - Atualização instantânea
 
 ---
@@ -110,8 +122,8 @@ Sistema completo de gestão comercial e ponto de venda (PDV) desenvolvido com **
 
 1. **Clone o repositório**
 ```bash
-git clone <url-do-repositorio>
-cd nfeasy
+git clone https://github.com/berbelmont/nfeasy-ionic.git
+cd nfeasy-ionic
 ```
 
 2. **Instale as dependências**
@@ -128,6 +140,44 @@ npm run dev
 ```
 http://localhost:3000
 ```
+
+---
+
+## 📱 Telas Implementadas
+
+### 1. 🔐 Login (`/login`)
+- Autenticação de usuários
+- Validação de credenciais
+- Redirecionamento baseado em role
+- **Backend:** `POST /api/Login`
+- **Componentes:** IonPage, IonCard, IonInput, IonButton
+
+### 2. 📊 Dashboard (`/home`)
+- Gráfico de vendas por hora
+- Métricas do dia (faturamento, vendas, ticket médio)
+- Lista de produtos com estoque baixo
+- **Backend:** `GET /api/Home`
+- **Componentes:** IonPage, IonHeader, IonCard, IonGrid, IonList
+
+### 3. 📦 Cadastro de Produtos (`/cadastro-produtos`)
+- Formulário completo de cadastro
+- Validações em tempo real
+- Toggle ativo/inativo
+- **Backend:** `POST /api/cadastro_produtos`
+- **Componentes:** IonPage, IonInput, IonSelect, IonToggle
+
+---
+
+## 📚 Documentação
+
+Este projeto inclui documentação completa:
+
+- **README_IONIC.md** - Documentação detalhada do projeto com Ionic
+- **BACKEND_DOCUMENTATION.md** - Documentação completa das APIs
+- **TESTING_GUIDE.md** - Guia completo de testes
+- **RESUMO_EXECUTIVO.md** - Resumo executivo do projeto
+- **CHECKLIST.md** - Checklist de verificação
+- **PROJETO_COMPLETO.md** - Status final do projeto
 
 ---
 

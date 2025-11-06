@@ -3,6 +3,8 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { setToken, setRole } from '@/lib/authFetch';
+import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonIcon } from '@ionic/react';
+import { documentTextOutline } from 'ionicons/icons';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,47 +38,46 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ background: '#09253a', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <div style={{
-        width: '540px',
-        background: '#f6f6f6',
-        borderRadius: '16px',
-        border: '1px solid #dadde1',
-        padding: '32px 40px',
-        boxShadow: '0 18px 40px rgba(0,0,0,.25)'
-      }}>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'center', margin: '6px 0 12px' }}>
-          <svg viewBox="0 0 24 24" fill="#3b79c5" style={{ width: '40px', height: '40px' }}>
-            <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM14 2v4a1 1 0 0 0 1 1h4" />
-          </svg>
-          <div style={{ fontWeight: 800, fontSize: '28px', color: '#0b2a3c' }}>NF Easy</div>
+    <IonPage>
+      <IonContent fullscreen className="ion-padding" style={{ '--background': '#09253a' }}>
+        <div className="login-container">
+          <IonCard className="login-card">
+            <IonCardHeader>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'center', margin: '6px 0 12px' }}>
+                <IonIcon icon={documentTextOutline} style={{ fontSize: '40px', color: '#3b79c5' }} />
+                <div style={{ fontWeight: 800, fontSize: '28px', color: '#0b2a3c' }}>NF Easy</div>
+              </div>
+              <IonCardTitle style={{ fontSize: '40px', textAlign: 'center', margin: '0' }}>Login</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <form onSubmit={handleSubmit}>
+                <IonItem>
+                  <IonLabel position="stacked">Usuário</IonLabel>
+                  <IonInput
+                    value={usuario}
+                    onIonInput={(e) => setUsuario(e.detail.value || '')}
+                    placeholder="admin ou caixa"
+                    required
+                  />
+                </IonItem>
+                <IonItem>
+                  <IonLabel position="stacked">Senha</IonLabel>
+                  <IonInput
+                    type="password"
+                    value={senha}
+                    onIonInput={(e) => setSenha(e.detail.value || '')}
+                    placeholder="1234"
+                    required
+                  />
+                </IonItem>
+                <IonButton expand="block" type="submit" color="success" style={{ marginTop: '18px' }}>
+                  Entrar
+                </IonButton>
+              </form>
+            </IonCardContent>
+          </IonCard>
         </div>
-        <h1 style={{ margin: '0 0 14px', fontSize: '40px', textAlign: 'center' }}>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <label style={{ display: 'block', marginTop: '12px' }}>
-            Usuário{' '}
-            <input
-              className="input"
-              value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
-              placeholder="admin ou caixa"
-            />
-          </label>
-          <label style={{ display: 'block', marginTop: '12px' }}>
-            Senha{' '}
-            <input
-              className="input"
-              type="password"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              placeholder="1234"
-            />
-          </label>
-          <button className="btn green" type="submit" style={{ width: '100%', marginTop: '18px' }}>
-            Entrar
-          </button>
-        </form>
-      </div>
-    </div>
+      </IonContent>
+    </IonPage>
   );
 }
