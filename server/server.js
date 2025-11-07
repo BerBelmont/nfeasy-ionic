@@ -7,6 +7,11 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
+// Health/ping endpoint (no auth) for quick connectivity checks
+app.get('/api/ping', (req, res) => {
+  res.json({ status: 'ok', time: new Date().toISOString() });
+});
+
 // Mock Database
 const mockUsers = [
   { id: '1', email: 'admin@nfeasy.com', password: 'admin123', name: 'Administrador', role: 'admin' },
@@ -180,7 +185,7 @@ app.get('/api/produtos', verifyToken, (req, res) => {
 });
 
 // Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Servidor rodando em http://localhost:${PORT}`);
   console.log(`📡 Endpoints disponíveis:`);
   console.log(`   POST /api/login`);

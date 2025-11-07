@@ -56,6 +56,8 @@ const Login: React.FC = () => {
     }
   };
 
+  // Removido: botões de teste/override. Mantemos apenas o login.
+
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding login-container">
@@ -94,6 +96,7 @@ const Login: React.FC = () => {
                   Entrar
                 </IonButton>
               </form>
+              {/* UI de teste removida */}
             </IonCardContent>
           </IonCard>
         </div>
