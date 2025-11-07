@@ -27,14 +27,19 @@ export function setRole(role: string): void {
   }
 }
 
+import { API_BASE } from './config';
+
 export async function authFetch(url: string, options: RequestInit = {}): Promise<Response> {
+  // If a relative API path is passed (e.g. '/api/login'), prefix with the runtime base
+  const finalUrl = url.startsWith('/api') ? `${API_BASE}${url}` : url;
+
   const token = getToken();
   const headers = {
     ...options.headers,
     'Authorization': `Bearer ${token || ''}`,
   };
 
-  const res = await fetch(url, { ...options, headers });
+  const res = await fetch(finalUrl, { ...options, headers });
 
   if (res.status === 401) {
     clearToken();

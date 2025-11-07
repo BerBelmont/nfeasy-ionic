@@ -1,0 +1,45 @@
+:root {
+  /* NF Easy Custom Colors */
+  --navy: #0b2a3c;
+  --panel: #f0f1f2;
+  --border: #cfd3d6;
+  --blue: #3b79c5;
+  --green: #27ae60;
+  --red: #e74c3c;
+  --text: #0f172a;
+  
+  /* Ionic Primary Color */
+  --ion-color-primary: #3b79c5;
+  --ion-color-primary-rgb: 59, 121, 197;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3469ad;
+  --ion-color-primary-tint: #4f86cb;
+
+  /* Ionic Secondary Color */
+  --ion-color-secondary: #0b2a3c;
+  --ion-color-secondary-rgb: 11, 42, 60;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0a2535;
+  --ion-color-secondary-tint: #233f50;
+
+  /* Ionic Success Color */
+  --ion-color-success: #27ae60;
+  --ion-color-success-rgb: 39, 174, 96;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #229954;
+  --ion-color-success-tint: #3db970;
+
+  /* Ionic Danger Color */
+  --ion-color-danger: #e74c3c;
+  --ion-color-danger-rgb: 231, 76, 60;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cb4335;
+  --ion-color-danger-tint: #e95e50;
+
+  /* Background */
+  --ion-background-color: #e9eaec;
+}

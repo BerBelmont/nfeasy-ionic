@@ -1,5 +1,3 @@
-/// <reference types="next" />
-/// <reference types="next/image-types/global" />
-
-// NOTE: This file should not be edited
-// see https://nextjs.org/docs/app/building-your-application/configuring/typescript for more information.
+// Next.js type shim removed — project migrated to Ionic React + Vite.
+// If you are keeping Next.js artifacts temporarily, this file is a placeholder.
+// Safe to delete when cleaning repository.
